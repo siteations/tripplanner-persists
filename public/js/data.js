@@ -93,17 +93,17 @@ var activities=[];
 
 var hotelsP = $.ajax({
     method: 'GET',
-    url: '/api/hotels'
+    url: '/api/hotels/'
     })
 
 var restaurantsP = $.ajax({
     method: 'GET',
-    url: '/api/restaurants'
+    url: '/api/restaurants/'
     });
 
 var activitiesP = $.ajax({
     method: 'GET',
-    url: '/api/restaurants'
+    url: '/api/activities/'
     });
 
 

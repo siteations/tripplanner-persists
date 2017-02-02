@@ -1,25 +1,25 @@
 var express = require('express');
 var router = express.Router();
-var Activity = require('../models/activity');
-var Promise = require('bluebird');
+var Activity = require('../../models/activity');
 
+router.get('/', function(req, res, next) {
+    // console.log("-_".repeat(40), Activity)
+    Activity.findAll({
+      }).then(function(Activity) {
+        res.send(Activity);
+        })
+        .catch(next);
+  });
 
-router.get('/api/activites', function(req, res, next) {
-
-  var findingActivities = Activity.findAll({
-    include: [Place]
-  }).then(function(activities) {
-
-    console.log(activities);
-    res.send('caught route');
-    // res.render('index', {
-    //   hotels: hotels,
-    //   activities: activities,
-    //   restaurants: restaurants
-    // });
-  })
-  .catch(next);
-
-});
+router.get('/:id', function(req, res, next) {
+  Activity.findOne({
+          where: {
+            id: req.params.id,
+          }
+      }).then(function(Activity) {
+        res.send(Activity);
+        })
+        .catch(next);
+  });
 
 module.exports = router;
