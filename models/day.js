@@ -7,8 +7,15 @@ var Activity = require('./activity');
 
 var Day = db.define('day', {
   number: {type:Sequelize.INTEGER},
-
+}, {
+    hooks: {
+        beforeCreate: function(day){
+        var dayID = day.getDataValue('id');
+        day.setDataValue('number', dayID);
+        }
+    }
 });
+
 
 Day.belongsTo(Hotel, {as: 'day_hotel'});
 Day.belongsToMany(Restaurant, {through: 'day_restaurant'});

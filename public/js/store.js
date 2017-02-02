@@ -27,7 +27,7 @@ class Store {
 
   dispatch(action) {
     this.startLog(action);
-    this.state = this.reducer(this.getState(), action);
+    this.state = this.reducer(this.getState(), action);  //updates state and sets to this.state
     this.endLog(action);
     this.runSubscriptions();
   }
@@ -40,8 +40,3 @@ class Store {
     return this.state;
   }
 }
-
-
-
-
-

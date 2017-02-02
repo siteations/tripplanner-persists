@@ -1,9 +1,5 @@
 
-
-
 //console.log('hotels exists: ', hotels);
-
-
 
 function AttractionSelect(attractions) {
   return Object.values(attractions)
@@ -18,16 +14,24 @@ function PlusButton(onClick) {
   return $(`<button class="btn btn-primary btn-circle pull-right">+</button>`)
     .on('click', onClick);
 
-
 }
 
-function AttractionChooser(type, attractions) {
+function AttractionChooser(type, attractions) {   //component on the html
   const $select = AttractionSelect(attractions);
   return $(`<div/>`)
     .append(`<h4>${type}</h4>`)
     .append($select)
     .append(PlusButton(function() {
-      appStore.dispatch(addAttractionToDay(type, $select.val()));
+        $.ajax({
+            method: 'PUT',
+            url: `/api/days/${i+1}`
+        }).then(function(bob){
+            console.log(bob)
+            appStore.dispatch(addAttractionToDay(type, $select.val()));  //the action,  the idea of the hotel
+
+        });
+
+
     }))
 
 }
@@ -67,7 +71,14 @@ function DayButton(i, currentDay) {
   `)
   .addClass(i === currentDay ? 'current-day': null)
   .on('click', function() {
-    appStore.dispatch(setCurrentDay(i));
+      $.ajax({
+          method: 'GET',
+          url: `/api/days/${i+1}`
+      }).then(function(bob){
+          console.log(bob)
+          appStore.dispatch(setCurrentDay(i));   //this starts at zero
+
+      });
   })
 }
 
@@ -85,13 +96,14 @@ function DayNavigation(days, currentDay) {
   return $(`<div class="day-buttons"/>`)
     .append(DayButtons(days, currentDay))
     .append(PlusButton(function() {
-      appStore.dispatch(addDay());
 
-      //post here...
-
-      // Day.create({
-      //   number: currentDay,
-      // });
+      $.ajax({
+          method: 'POST',
+          url: '/api/days/'
+      }).then(function(bob){
+          console.log(bob)
+          appStore.dispatch(addDay());
+      });
 
     }))
 }

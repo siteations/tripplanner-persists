@@ -22,10 +22,9 @@ router.get('/:id', function(req, res, next) {
         .catch(next);
   });
 
-router.post('/:id', function(req, res, next) {
-        Day.create({
-            number: req.params.id,
-          }).then(function(day) {
+router.post('/', function(req, res, next) {
+        Day.create({})
+        .then(function(day) {
           res.send(day);
         })
         .catch(next);
