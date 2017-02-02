@@ -16,18 +16,32 @@ function PlusButton(onClick) {
 
 }
 
-function AttractionChooser(type, attractions) {   //component on the html
-  const $select = AttractionSelect(attractions);
+function AttractionChooser(type, state) {   //component on the html
+
+  //attractions.currentDay
+  let {currentDay} = state;
+  //console.log(currentDay);
+  // let attractions={
+  //       hotels,
+  //       activities,
+  //       restaurants,
+  //     };
+  // console.log(attractions);
+
+  const $select = AttractionSelect(state[type]);
   return $(`<div/>`)
     .append(`<h4>${type}</h4>`)
     .append($select)
     .append(PlusButton(function() {
         $.ajax({
             method: 'PUT',
-            url: `/api/days/${i+1}`
+            url: `/api/days/${currentDay+1}`,
+            data: {type:type , value:$select.val()}
         }).then(function(bob){
-            console.log(bob)
+
             appStore.dispatch(addAttractionToDay(type, $select.val()));  //the action,  the idea of the hotel
+
+
 
         });
 
@@ -46,9 +60,9 @@ function AttractionChoosers(state) {
   `);
 
   $elem.find('#options-panel')
-    .append(AttractionChooser('hotels', state.hotels))
-    .append(AttractionChooser('restaurants', state.restaurants))
-    .append(AttractionChooser('activities', state.activities))
+    .append(AttractionChooser('hotels', state)) //originally state.hotels
+    .append(AttractionChooser('restaurants', state))
+    .append(AttractionChooser('activities', state))
 
   return $elem;
 }

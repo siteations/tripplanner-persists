@@ -31,10 +31,21 @@ router.post('/', function(req, res, next) {
   });
 
 router.put('/:id', function(req, res, next) {
+        console.log("this should be our body: ", req.body);
 
-        Day.update({
-            where: { number: req.params.id }
+        Day.findOne({
+            where: { id: req.params.id }
             // need to add in more logic?
+        }).then(function(dayEntry) {
+
+            // return dayEntry.update(req.body)
+
+
+            //   params.type: 'value', description: 'baaaaaar'}, {fields: ['title']}).then(function() {
+
+            // })
+
+
         }).then(function(day) {
         res.send(day);
         })
